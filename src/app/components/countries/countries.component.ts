@@ -7,6 +7,10 @@ import {CountriesService} from '../../services/countries.service';
 })
 export class CountriesComponent implements OnInit {
   countries = [];
+  page = 1;
+  pageSize = 10;
+  loading = false;
+  searchTerm = '';
 
   constructor(private countriesService: CountriesService) {
   }
