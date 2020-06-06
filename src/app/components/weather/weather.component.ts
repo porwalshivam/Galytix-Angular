@@ -11,6 +11,7 @@ export class WeatherComponent implements OnInit {
   weatherInformation: any;
   units = ['metric', 'imperial'];
   currentUnit = this.units[0];
+  loading = false;
 
   constructor(private weatherService: WeatherService, private activeModal: NgbActiveModal) {
   }
@@ -24,11 +25,14 @@ export class WeatherComponent implements OnInit {
     if (!this.country) {
       return;
     }
+    this.loading = true;
     const capitalWithCode = `${this.country.capital},${this.country.alpha2Code}`;
     this.weatherService.getWeatherInformation(capitalWithCode, this.currentUnit).subscribe(resp => {
       this.weatherInformation = resp;
+      this.loading = false;
     }, error => {
       console.log(error);
+      this.loading = false;
     });
   }
 

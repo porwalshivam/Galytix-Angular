@@ -2,8 +2,18 @@
   <h3 class="modal-title" id="modal-title">Weather of {{country?.capital}}</h3>
 </div>
 <div class="modal-body">
-  <div *ngIf="!weatherInformation">Loading...</div>
-  <ng-container *ngIf="weatherInformation">
+  <div class="form-group form-inline">
+    Select Unit:
+    <select
+      name="units"
+      id="units"
+      class="form-control col-6 ml-2"
+      [(ngModel)]="currentUnit" (ngModelChange)="getWeatherInformation()">
+      <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+    </select>
+  </div>
+  <div *ngIf="loading">Loading...</div>
+  <ng-container *ngIf="!loading">
     <div>Temperature: {{weatherInformation?.main?.temp + (currentUnit === 'metric' ? '°C' : '°F')}} </div>
     <div>Humidity: {{weatherInformation?.main?.humidity}}%</div>
     <div>Wind: {{weatherInformation?.wind?.speed}}m/s</div>
@@ -12,6 +22,6 @@
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" ngbAutofocus (click)="closeModal()">Close</button>
 </div>
 
