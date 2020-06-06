@@ -11,11 +11,12 @@ export class WeatherService {
   constructor(private http: HttpClient) {
   }
 
-  getWeatherInformation(capitalWithCode: string) {
+  getWeatherInformation(capitalWithCode: string, unit) {
     return this.http.get(this.baseUrl, {
       params: {
         q: capitalWithCode,
-        APPID: this.appId
+        APPID: this.appId,
+        units: unit
       }
     });
   }

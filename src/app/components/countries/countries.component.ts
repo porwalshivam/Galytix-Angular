@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CountriesService} from '../../services/countries.service';
 import {Subject, Subscription} from 'rxjs';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {WeatherComponent} from '../weather/weather.component';
 
 @Component({
   selector: 'app-countries',
@@ -16,7 +18,8 @@ export class CountriesComponent implements OnInit, OnDestroy {
   searchTermChanged: Subject<string> = new Subject<string>();
   searchTermSubscription: Subscription;
 
-  constructor(private countriesService: CountriesService) {
+  constructor(private countriesService: CountriesService,
+              private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -46,4 +49,11 @@ export class CountriesComponent implements OnInit, OnDestroy {
     this.searchTermSubscription.unsubscribe();
   }
 
+  openWeatherInformation(country) {
+    if (!country) {
+      return;
+    }
+    const weatherModal = this.modalService.open(WeatherComponent);
+    weatherModal.componentInstance.country = country;
+  }
 }
