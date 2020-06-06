@@ -30,12 +30,15 @@ export class CountriesComponent implements OnInit, OnDestroy {
   private getCountries(searchText: string = '') {
     this.countriesService.getCountries(searchText).subscribe((resp: Array<any>) => {
       this.countries = resp;
+      this.loading = false;
     }, error => {
       console.error(error);
+      this.loading = false;
     });
   }
 
   searchCountries(searchText: string) {
+    this.loading = true;
     this.searchTermChanged.next(searchText);
   }
 
